@@ -7,7 +7,6 @@ from PIL import Image, ImageTk, ImageDraw, ImageOps
 
 # Definimos las listas
 
-
 provincias_argentinas = [
     "Buenos Aires", "Catamarca", "Chaco", "Chubut", "Córdoba", "Corrientes",
     "Entre Ríos", "Formosa", "Jujuy", "La Pampa", "La Rioja", "Mendoza",
@@ -23,8 +22,7 @@ provincias_precios = [
     "11700", "11800", "11900", "12000",
     "12100"
 ]
-#
-
+#creamos los datos del usuario como objeto
 class Datos:
     def __init__(self):
         # Inicializas los atributos vacíos
@@ -36,36 +34,30 @@ class Datos:
 
 #con la clase definida podemos ahora guardar los datos en una 
 
-# Ventana de compra realizada
-
-
-# Definimos la ventana principal
-
 def mostrar_ventana_principal(datos):
+
+    """ creamos la  ventana principal """
 
     ventana = tk.Tk()
     ventana.title('Aeroline.ARG')
     ventana.geometry('1200x700')
 
-    #cargar la imagen de fondo
+    #----------------cargar la imagen de fondo
 
     image_path = "file/image.png"  # Reemplaza con la ruta correcta de tu imagen
     image = Image.open(image_path)
     background_image = ImageTk.PhotoImage(image)
 
-    # crear un widget Canvas
+    #-----------------crear un widget Canvas
     
     canvas = tk.Canvas(ventana, width=900, height=700)
     canvas.pack(fill="both", expand=True)
 
-    # colocar la imagen de fondo en el Canvas
+    #colocar la imagen de fondo en el Canvas
 
     canvas.create_image(0, 0, image=background_image, anchor="nw")
-
-    # mantener una referencia de la imagen para evitar que sea eliminada por el garbage collector
-
-    canvas.background_image = background_image
-
+    #canvas.background_image = background_image #mantener una referencia de la imagen para evitar que sea eliminada por el garbage collector
+    #tenia error 
     #-------------------------------------------------------------------------------------------------------------
 
     style = ttk.Style()
@@ -165,25 +157,25 @@ def mostrar_ventana_principal(datos):
     ttk.Label(marco_formulario, text="Fecha:", style="Transparent.TLabel").grid(row=6, column=0, padx=15, pady=2, sticky='e')
     entrada6 = ttk.Entry(marco_formulario)
     entrada6.grid(row=6, column=1, padx=5, pady=2, sticky='ew')
+
+    #guardo los datos en el class
     
     def guardar_datos():
-        datos.nombre = entrada1.get()
+        datos.nombre = entrada1.get() #la unica forma de entrar a los entry es con el .get
         datos.dni = entrada2.get()
         datos.email = entrada3.get()
         datos.fecha = entrada6.get()
-        print(f"Nombre guardado: {datos.nombre}")  # Verificación
     
-    #ttk.Button(marco_formulario, text="Guardar", command=guardar_datos).grid(row=7, column=1, padx=5, pady=10)
 
 
     #-------------------------------------------------------------------------------------------------------------
 
-    # Configurar la columna del `marco_formulario` para que el `entrada` no se expanda más de lo necesario
+    # configurar la columna del `marco_formulario` para que el `entrada` no se expanda mas de lo necesario
 
     marco_formulario.columnconfigure(1, weight=1)
     marco_formulario.columnconfigure(2, weight=0)
 
-    # Lista de provincias
+    # listado de lasss provincias
 
     marco_lista = tk.Frame(marco_formulario2)
     marco_lista.grid(row=1, column=0, columnspan=2, padx=5, pady=5, sticky='w')
@@ -210,6 +202,7 @@ def mostrar_ventana_principal(datos):
 
     provincias_con_precios = list(zip(provincias_argentinas, provincias_precios))
 
+
     def on_select(event):
         seleccion_index = lista.curselection()
         if seleccion_index:
@@ -217,7 +210,13 @@ def mostrar_ventana_principal(datos):
             provincia, precio = provincias_con_precios[seleccion]
             mostrar_informacion(provincia, precio)
 
+    
+    ##chatgpt no sabia
+
     lista.bind('<<ListboxSelect>>', on_select)
+
+    ##definimos la seleccion de lista
+    
 
 
     def mostrar_informacion(provincia, precios):
@@ -229,14 +228,58 @@ def mostrar_ventana_principal(datos):
 
     #-------------------------------------------------------------------------------------------------------------
     #guardar datos y mostrar mensaje de completado
+    
 
-    def imprimir_informacion_compra():
-        guardar_datos()
-        compra_realizada()
+
+
+
 
     #-------------------------------------------------------------------------------------------------------------
+
+    #aqui lo que hacemos es definir cual entry es el que esta vacio para imprimir un mensaje
+    #no es eficiente pero ahorramos codigo
+    def validar_entradas():
+        entradas = [
+            entrada1.get(), entrada2.get(), entrada3.get(), 
+            entrada4.get(), entrada5.get(), entrada6.get()
+        ]
+        errores = [
+            "Ingresar nombre",
+            "Ingresar DNI",
+            "Ingresar Email",
+            "Ingresar N/T",
+            "Ingresar CVV",
+            "Ingresar Fecha"
+        ]
+        
+        flagse = [entrada == "" for entrada in entradas]
+
+        mensajes_error = [errores[i] for i, flag in enumerate(flagse) if flag]
+        
+        return mensajes_error
     
-    # Llamada a la funcion principal
+    def imprimir_informacion_compra():
+        if not lista.curselection():
+            venta_completada = tk.Toplevel()
+            venta_completada.title('¡Error al completar los datos!')
+            venta_completada.geometry('450x450')
+
+            etiqueta_bienvenida = tk.Label(venta_completada, text=f"¡Seleccione una provincia!")
+            etiqueta_bienvenida.pack(pady=20)
+
+            boton_continuar = tk.Button(venta_completada, text="Continuar", command=compra_error.destroy)
+            boton_continuar.pack(pady=20)
+        else:
+            mensajes_error = validar_entradas()
+            if mensajes_error:
+                compra_error(mensajes_error)
+            else:
+                guardar_datos()
+                compra_realizada()
+            
+
+    
+    #-------------------------------------------------------------------------------------------------------------
 
     def compra_realizada():
         venta_completada = tk.Toplevel()
@@ -250,6 +293,19 @@ def mostrar_ventana_principal(datos):
         boton_continuar = tk.Button(venta_completada, text="Continuar", command=venta_completada.destroy)
         boton_continuar.pack(pady=20)
 
+    def compra_error(mensajes_error):
+        venta_completada = tk.Toplevel()
+        venta_completada.title('¡Error al completar los datos!')
+        venta_completada.geometry('450x450')
+
+        for mensaje in mensajes_error:
+            etiqueta_bienvenida = tk.Label(venta_completada, text=mensaje)
+            etiqueta_bienvenida.pack(pady=5)
+
+
+        boton_continuar = tk.Button(venta_completada, text="Continuar", command=compra_error.destroy)
+        boton_continuar.pack(pady=20)
+
     # botones que no se moveran
 
     boton_comprar = tk.Button(marco_formulario3, text="Comprar", command=imprimir_informacion_compra)
@@ -258,6 +314,7 @@ def mostrar_ventana_principal(datos):
     ventana.mainloop()
 
 mis_datos = Datos()
+
 mostrar_ventana_principal(Datos)
 
 
