@@ -12,22 +12,6 @@ from PIL import Image, ImageTk, ImageDraw, ImageOps
 
 ##definicion de funciones de bordeado para imagenes
 
-def redondear_bordes(imagen, radio_bordes):
-    """Redondear los bordes de una imagen."""
-    # mascara con bordes redondeados
-
-    ancho, alto = imagen.size
-    mascara = Image.new('L', (ancho, alto), 0)
-    draw = ImageDraw.Draw(mascara)
-    draw.rounded_rectangle([(0, 0), (ancho, alto)], radio_bordes, fill=255)
-    
-    # Aplicar a la imagen
-
-    imagen = ImageOps.fit(imagen, (ancho, alto), centering=(0.5, 0.5))
-    imagen.putalpha(mascara)
-    return imagen
-
-
 # Definimos las listas
 
 >>>>>>> 769ec47 (v1)
