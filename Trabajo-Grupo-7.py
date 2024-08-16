@@ -1,7 +1,6 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 from tkinter import ttk
-from PIL import Image, ImageTk, ImageDraw, ImageOps
 
 ##definicion de funciones de bordeado para imagenes
 
@@ -25,7 +24,6 @@ provincias_precios = [
 #creamos los datos del usuario como objeto
 class Datos:
     def __init__(self):
-        # Inicializas los atributos vacíos
         self.nombre = ""
         self.dni = ""
         self.email = ""
@@ -44,41 +42,48 @@ def mostrar_ventana_principal(datos):
 
     #----------------cargar la imagen de fondo
 
-    image_path = "file/image.png"  # Reemplaza con la ruta correcta de tu imagen
-    image = Image.open(image_path)
-    background_image = ImageTk.PhotoImage(image)
+    image_path = "file/image.png"  # ruta de la imagen
+    image = Image.open(image_path) #abrimos la imagen con el modulo Image
+    background_image = ImageTk.PhotoImage(image) #definimos background image con el modulo de tk ImageTK y usamos la clase PhotoImage(con la imagen)
 
-    #-----------------crear un widget Canvas
-    
+    #-----------------crear un widget Canvas ------------------ aca aclaro que saque de chatgpt la implementacion porq no sabia usar images como fondo
+
     canvas = tk.Canvas(ventana, width=900, height=700)
     canvas.pack(fill="both", expand=True)
 
     #colocar la imagen de fondo en el Canvas
 
     canvas.create_image(0, 0, image=background_image, anchor="nw")
-    #canvas.background_image = background_image #mantener una referencia de la imagen para evitar que sea eliminada por el garbage collector
-    #tenia error 
-    #-------------------------------------------------------------------------------------------------------------
 
+
+
+    #-------------------------------------------------------------------------------------------------------------
+    #                   aqui creamos los Frames para meter la estrutura del programa donde queremos con place
+    #-------------------------------------------------------------------------------------------------------------
     style = ttk.Style()
     style.configure("Transparent.TLabel", background="#fcfefb", foreground="black")
 
-    # Crear un marco para los widgets que usan grid
-
+    #----------------------------------------------------------------------------------marco para los widgets
     marco_logotipo = ttk.Frame(ventana, style="Transparent.TLabel")
     marco_logotipo.place(relx=0.22, rely=0.22, anchor="center", width=500, height=300)
+    #--------------------eje x ----- eje y --------------------ancho-------alto-----
 
     marco_formulario = ttk.Frame(ventana, style="Transparent.TLabel")
     marco_formulario.place(relx=0.18, rely=0.3, anchor="center", width=450, height=200)
+    #--------------------eje x ----- eje y --------------------ancho-------alto-----
 
     marco_formulario2 = ttk.Frame(ventana, style="Transparent.TLabel")
     marco_formulario2.place(relx=0.52, rely=0.25, anchor="center", width=300, height=300)
+    #--------------------eje x ----- eje y --------------------ancho-------alto-----
 
     marco_formulario3 = ttk.Frame(ventana, style="Transparent.TLabel")
     marco_formulario3.place(relx=0.23, rely=0.7, anchor="center", width=450, height=350)
+    #--------------------eje x ----- eje y --------------------ancho-------alto-----
+
 
     #-------------------------------------------------------------------------------------------------------------
-
+    #                           EL Laber que contiene la primera imagen (logo)
+    #-------------------------------------------------------------------------------------------------------------
     # Cargar la imagen (logo)
 
     image_path = "file/logo.jpg"  # Reemplaza con la ruta correcta de tu logo
@@ -92,16 +97,15 @@ def mostrar_ventana_principal(datos):
     label_logo.grid(row=0, column=0, padx=10, pady=10)  # Ajusta fila, columna, y relleno
 
     #-------------------------------------------------------------------------------------------------------------
+    #                           EL Laber que contiene la segunda imagen
+    #-------------------------------------------------------------------------------------------------------------
+    
+    #Para agregar una imagen de fondo a un ttk.Frame y colocar dos Label en la parte superior de ese Frame utilizando grid 
+    #crear un Frame para la imagen de fondo.
+    #agregar la imagen al Frame usando un Label.
+    #colocar los Label encima de la imagen utilizando grid.
 
-    """
-    Para agregar una imagen de fondo a un ttk.Frame y colocar dos Label en la parte superior de ese Frame utilizando grid, 
-    puedes seguir estos pasos:
-
-    Crear un Frame para la imagen de fondo.
-    Agregar la imagen al Frame usando un Label.
-    Colocar los Label encima de la imagen utilizando grid.
-    """
-    # Cargar la Imagen de Fondo
+    #cargar la Imagen de Fondo
     image_path = "file/background_m2.jpg"  # Ruta de la imagen
     imagen_fondo = Image.open(image_path)
     imagen_fondo = imagen_fondo.resize((450, 350))
@@ -112,20 +116,18 @@ def mostrar_ventana_principal(datos):
     label_fondo = tk.Label(marco_formulario3, image=imagen_fondo)
     label_fondo.place(relx=0, rely=0, relwidth=1, relheight=1)
 
-    ##ingresamos labels
-    """
-    Los Label se colocan en la parte superior del Frame usando grid. 
-    Ajusta sticky para la alineación y padx, pady para el espaciado.
-    """
-    """
-    Configuramos la expansión de filas y columnas para asegurar que el Frame y los Label se ajusten correctamente.
-    """
+    #-------------------------------------------------------------------------------------------ingresamos labels
+    #Los Label se colocan en la parte superior del Frame usando grid. 
+    #Ajusta sticky para la alineacion //// padx, pady para el espaciado.
+    #Configuramos la expansión de filas y columnas para asegurar que el Frame y los Label se ajusten correctamente.
 
     marco_formulario3.grid_rowconfigure(0, weight=1)
     marco_formulario3.grid_rowconfigure(1, weight=1)
     marco_formulario3.grid_columnconfigure(0, weight=1)
 
-    #--------------------------------------------------------------------------------------------------------------
+    #-------------------------------------------------------------------------------------------------------------
+    #                                           Ingresamos los Label y Entry
+    #-------------------------------------------------------------------------------------------------------------
     # Retornar la instancia creada
     # seccion de logeo
     
@@ -165,9 +167,20 @@ def mostrar_ventana_principal(datos):
         datos.dni = entrada2.get()
         datos.email = entrada3.get()
         datos.fecha = entrada6.get()
+
+
+
+
+
+
+
+
+
     
 
 
+    #-------------------------------------------------------------------------------------------------------------
+    #                           se crea el Scrollbar para poder ver las provincias
     #-------------------------------------------------------------------------------------------------------------
 
     # configurar la columna del `marco_formulario` para que el `entrada` no se expanda mas de lo necesario
@@ -191,33 +204,42 @@ def mostrar_ventana_principal(datos):
 
     scrollbar.config(command=lista.yview)
 
+
+
+
+
+
+
+
+
+
+    #-------------------------------------------------------------------------------------------------------------
+    #                           Primero un Label de Informacion de las provincias
     #-------------------------------------------------------------------------------------------------------------
 
-    # Reservar espacio para `info_label` y configurar `sticky`
+    # Reservar espacio para mostrar el nombre de las provincias seleccionada
 
     info_label = tk.Label(marco_formulario3, text="Seleccione la provincia", background="#8ed0dc", width=30)
     info_label.pack(padx=5, pady=15, anchor='w')
 
-    # vincular el evento de seleccion
+    # vincular el evento de seleccion y el scrollbar
+
+    #primero unimos las listas para formar un diccionario, provincia : precio
 
     provincias_con_precios = list(zip(provincias_argentinas, provincias_precios))
 
+    #-------------------- Con la siguiente funcion podemos llamar las provincias y sus precios con dar clicl
+    def on_select(event): #como es un click se define como evento
+        seleccion_index = lista.curselection() #lista.curselection() me permite saber si le dimos click
+        if seleccion_index:                     #ahora que le diste click nos da la infomacion de la seleccion
+            seleccion = seleccion_index[0]      #donde le diste click lo guarda en seleccion, iniciando desde 0
+            provincia, precio = provincias_con_precios[seleccion] #luego busca la provincia y su precio segun tu seleccion
+            mostrar_informacion(provincia, precio)                 #nos deja la informacion en mostrar informacion
 
-    def on_select(event):
-        seleccion_index = lista.curselection()
-        if seleccion_index:
-            seleccion = seleccion_index[0]
-            provincia, precio = provincias_con_precios[seleccion]
-            mostrar_informacion(provincia, precio)
-
-    
     ##chatgpt no sabia
-
-    lista.bind('<<ListboxSelect>>', on_select)
+    lista.bind('<<ListboxSelect>>', on_select)#vincula la el clicl con la lista
 
     ##definimos la seleccion de lista
-    
-
 
     def mostrar_informacion(provincia, precios):
         info_label.config(text=f"Precio del vuelos ${precios}")
@@ -226,18 +248,21 @@ def mostrar_ventana_principal(datos):
     info_label2 = tk.Label(marco_formulario3, text="Aeropuertos", font=("Arial", 15),width=20, background="#89cfdb")
     info_label2.pack(padx=8, pady=110, anchor='w')
 
+
+
+
+
+
+
     #-------------------------------------------------------------------------------------------------------------
-    #guardar datos y mostrar mensaje de completado
-    
-
-
-
-
-
+    #                              guardar datos y mostrar mensaje de completado
     #-------------------------------------------------------------------------------------------------------------
 
     #aqui lo que hacemos es definir cual entry es el que esta vacio para imprimir un mensaje
     #no es eficiente pero ahorramos codigo
+
+
+
     def validar_entradas():
         entradas = [
             entrada1.get(), entrada2.get(), entrada3.get(), 
@@ -256,7 +281,7 @@ def mostrar_ventana_principal(datos):
 
         mensajes_error = [errores[i] for i, flag in enumerate(flagse) if flag]
         
-        return mensajes_error
+        return mensajes_error #devuelve el resultado de la operacion
     
     def imprimir_informacion_compra():
         if not lista.curselection():
@@ -276,18 +301,31 @@ def mostrar_ventana_principal(datos):
             else:
                 guardar_datos()
                 compra_realizada()
-            
 
-    
+
+
+
+
+
+
+
+
+
+            
+    #-------------------------------------------------------------------------------------------------------------
+    #
     #-------------------------------------------------------------------------------------------------------------
 
     def compra_realizada():
         venta_completada = tk.Toplevel()
         venta_completada.title('Informacion del Ticket')
-        venta_completada.geometry('250x250')
+        venta_completada.geometry('400x250')
 
         # Utiliza el atributo 'nombre' de la instancia 'usuario_creado'
         etiqueta_bienvenida = tk.Label(venta_completada, text=f"¡Compra completada {datos.nombre}!")
+        etiqueta_bienvenida.pack(pady=20)
+
+        etiqueta_bienvenida = tk.Label(venta_completada, text=f"La fecha del viaje: {datos.fecha}")
         etiqueta_bienvenida.pack(pady=20)
 
         boton_continuar = tk.Button(venta_completada, text="Continuar", command=venta_completada.destroy)
@@ -313,9 +351,41 @@ def mostrar_ventana_principal(datos):
 
     ventana.mainloop()
 
-mis_datos = Datos()
 
+
+
+mis_datos = Datos()
 mostrar_ventana_principal(Datos)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+""" ESTRUCTURA """
+
+#LISTAS
+#CLASE USUARIO PARA MANEJAR LOS DATOS COMO OBJETOS DONDE YA CADA DATO ES UN ATRIBUTO
+#CREAMOS LE VENTANA PRINCIPAL Y CARGAMOS LA CLASE USUARIO (datos)
+
+
+
+
+
+
+
 
 
 
