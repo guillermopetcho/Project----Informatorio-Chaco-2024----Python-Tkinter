@@ -8,10 +8,10 @@ Muestra las provincia y precio de pasajes.
 --version 2
 
 Se controla el ingreso de datos.\n
-\nSe controla la seleccion de un elemento de la barra.
-\nImprime los datos de la compra: Nombre y Fecha del pasaje.
-\nImprime el/los datos faltantes en el ingreso de datos.
-\nImprime un error al no seleccionar.
+\n Se controla la seleccion de un elemento de la barra.
+\n Imprime los datos de la compra: Nombre y Fecha del pasaje.
+\n Imprime el/los datos faltantes en el ingreso de datos.
+\n Imprime un error al no seleccionar.
 
 ![Screencast from 08-15-2024 08_26_59 PM](https://github.com/user-attachments/assets/dd307bc7-12d2-43a4-8a22-719281ad8a58)
 
