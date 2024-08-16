@@ -334,11 +334,11 @@ def mostrar_ventana_principal(datos):
     def compra_error(mensajes_error):
         venta_completada = tk.Toplevel()
         venta_completada.title('¡Error al completar los datos!')
-        venta_completada.geometry('450x450')
+        venta_completada.geometry('300x250')
 
         for mensaje in mensajes_error:
             etiqueta_bienvenida = tk.Label(venta_completada, text=mensaje)
-            etiqueta_bienvenida.pack(pady=5)
+            etiqueta_bienvenida.pack(pady=20, anchor="center")
 
 
         boton_continuar = tk.Button(venta_completada, text="Continuar", command=compra_error.destroy)
