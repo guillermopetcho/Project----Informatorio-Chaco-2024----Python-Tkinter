@@ -45,23 +45,6 @@ def mostrar_ventana_principal(datos):
     ventana.configure(bg='Black')
     
 
-    #----------------cargar la imagen de fondo
-
-    """image_path = "file/image.png"  # ruta de la imagen
-    image = Image.open(image_path) #abrimos la imagen con el modulo Image
-    background_image = ImageTk.PhotoImage(image) #definimos background image con el modulo de tk ImageTK y usamos la clase PhotoImage(con la imagen)
-
-    #-----------------crear un widget Canvas ------------------ aca aclaro que saque de chatgpt la implementacion porq no sabia usar images como fondo
-
-    canvas = tk.Canvas(ventana, width=900, height=700)
-    canvas.pack(fill="both", expand=True)
-
-    #colocar la imagen de fondo en el Canvas
-
-    canvas.create_image(0, 0, image=background_image, anchor="nw")"""
-
-
-
     #-------------------------------------------------------------------------------------------------------------
     #                   aqui creamos los Frames para meter la estrutura del programa donde queremos con place
     #-------------------------------------------------------------------------------------------------------------
@@ -86,50 +69,6 @@ def mostrar_ventana_principal(datos):
     marco_formulario3.place(relx=0.23, rely=0.7, anchor="center", width=450, height=350)
     #--------------------eje x ----- eje y --------------------ancho-------alto-----
 
-
-    #-------------------------------------------------------------------------------------------------------------
-    #                           EL Laber que contiene la primera imagen (logo)
-    #-------------------------------------------------------------------------------------------------------------
-    # Cargar la imagen (logo)
-
-    """image_path = "file/logo.jpg"  # Reemplaza con la ruta correcta de tu logo
-    imagen_logo = Image.open(image_path)
-    imagen_logo = imagen_logo.resize((420, 80))  # Redimensiona la imagen si es necesario
-    imagen_logo = ImageTk.PhotoImage(imagen_logo)
-
-    # Crear un Label para mostrar la imagen
-
-    label_logo = tk.Label(marco_logotipo, image=imagen_logo)
-    label_logo.grid(row=0, column=0, padx=10, pady=10)  # Ajusta fila, columna, y relleno"""
-
-    #-------------------------------------------------------------------------------------------------------------
-    #                           EL Laber que contiene la segunda imagen
-    #-------------------------------------------------------------------------------------------------------------
-    
-    #Para agregar una imagen de fondo a un ttk.Frame y colocar dos Label en la parte superior de ese Frame utilizando grid 
-    #crear un Frame para la imagen de fondo.
-    #agregar la imagen al Frame usando un Label.
-    #colocar los Label encima de la imagen utilizando grid.
-
-    """ #cargar la Imagen de Fondo
-    image_path = "file/background_m2.jpg"  # Ruta de la imagen
-    imagen_fondo = Image.open(image_path)
-    imagen_fondo = imagen_fondo.resize((450, 350))
-    imagen_fondo = ImageTk.PhotoImage(imagen_fondo)
- 
-    #Crear el Frame y el Label para la Imagen:
-
-    label_fondo = tk.Label(marco_formulario3, image=imagen_fondo)
-    label_fondo.place(relx=0, rely=0, relwidth=1, relheight=1)"""
-
-    #-------------------------------------------------------------------------------------------ingresamos labels
-    #Los Label se colocan en la parte superior del Frame usando grid. 
-    #Ajusta sticky para la alineacion //// padx, pady para el espaciado.
-    #Configuramos la expansión de filas y columnas para asegurar que el Frame y los Label se ajusten correctamente.
-
-    """marco_formulario3.grid_rowconfigure(0, weight=1)
-    marco_formulario3.grid_rowconfigure(1, weight=1)
-    marco_formulario3.grid_columnconfigure(0, weight=1)"""
 
     #-------------------------------------------------------------------------------------------------------------
     #                                           Ingresamos los Label y Entry
@@ -174,25 +113,9 @@ def mostrar_ventana_principal(datos):
         datos.email = entrada3.get()
         datos.fecha = entrada6.get()
 
-
-
-
-
-
-
-
-
-    
-
-
     #-------------------------------------------------------------------------------------------------------------
     #                           se crea el Scrollbar para poder ver las provincias
     #-------------------------------------------------------------------------------------------------------------
-
-    # configurar la columna del `marco_formulario` para que el `entrada` no se expanda mas de lo necesario
-
-    """marco_formulario.columnconfigure(1, weight=1)
-    marco_formulario.columnconfigure(2, weight=0)"""
 
     # listado de lasss provincias
 
@@ -209,13 +132,6 @@ def mostrar_ventana_principal(datos):
         lista.insert(tk.END, provincia)
 
     scrollbar.config(command=lista.yview)
-
-
-
-
-
-
-
 
 
 
@@ -260,8 +176,6 @@ def mostrar_ventana_principal(datos):
     datos.provincia = provincia
 
 
-
-
     #-------------------------------------------------------------------------------------------------------------
     #                              guardar datos y mostrar mensaje de completado
     #-------------------------------------------------------------------------------------------------------------
@@ -287,7 +201,7 @@ def mostrar_ventana_principal(datos):
         
         #flagse = [entrada == "" for entrada in entradas]
 
-        flagse = []  # Creamos una lista vacía para almacenar los resultados
+        flagse = []  # Creamos una lista 
 
         for entrada in entradas:  
             if entrada == "":  
@@ -345,15 +259,15 @@ def mostrar_ventana_principal(datos):
         etiqueta_bienvenida2 = tk.Label(venta_completada, text=f"La fecha del viaje: {datos.fecha}")
         etiqueta_bienvenida2.pack(pady=20)
 
-        etiqueta_bienvenida3 = tk.Label(venta_completada, text=f"Destino:",info_label2)
+        etiqueta_bienvenida3 = tk.Label(venta_completada, text=f"Destino: {provincias_argentinas[provincia]}")
         etiqueta_bienvenida3.pack(pady=20)
 
         boton_continuar = tk.Button(venta_completada, text="Continuar", command=venta_completada.destroy)
         boton_continuar.pack(pady=20)
 
     def compra_error(mensajes_error):
-        venta_completada = tk.Toplevel()
-        venta_completada.title('¡Error al completar los datos!')
+        venta_completada = tk.Toplevel() 
+        venta_completada.title('¡Error al completar los datos!') 
         venta_completada.geometry('400x250')
 
         for mensaje in mensajes_error:
@@ -370,7 +284,6 @@ def mostrar_ventana_principal(datos):
     boton_comprar.pack(padx=5, pady=5, anchor='s')
 
     ventana.mainloop()
-
 
 
 #CARGA Y LLAMADA
