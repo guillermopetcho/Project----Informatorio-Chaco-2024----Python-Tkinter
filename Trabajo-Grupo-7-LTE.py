@@ -21,6 +21,17 @@ provincias_precios = [
     "11700", "11800", "11900", "12000",
     "12100"
 ]
+
+fechas_index = [
+    "1", "2", "3", "4", "5", "6",
+    "7", "8", "9", "10", "11", "12"
+]
+
+dias_index = [
+    "1", "2", "3", "4", "5", "6",
+    "7", "8", "9", "10", "11", "12"
+]
+
 #creamos los datos del usuario como objeto
 class Datos:
     def __init__(self):
@@ -42,7 +53,7 @@ def mostrar_ventana_principal(datos):
     ventana.title('Aeroline.ARG')
     ventana.geometry('1200x700')
     #implementacion de un color de fondo 3333333333333333333333333333333333333333333333333333333
-    ventana.configure(bg='Black')
+    ventana.configure(bg='white')
     
 
     #-------------------------------------------------------------------------------------------------------------
@@ -69,6 +80,9 @@ def mostrar_ventana_principal(datos):
     marco_formulario3.place(relx=0.23, rely=0.7, anchor="center", width=450, height=350)
     #--------------------eje x ----- eje y --------------------ancho-------alto-----
 
+    marco_formulario4 = ttk.Frame(ventana, style="Transparent.TLabel")
+    marco_formulario4.place(relx=0.6, rely=0.7, anchor="center", width=450, height=350)
+    #--------------------eje x ----- eje y --------------------ancho-------alto-----
 
     #-------------------------------------------------------------------------------------------------------------
     #                                           Ingresamos los Label y Entry
@@ -136,6 +150,29 @@ def mostrar_ventana_principal(datos):
 
 
     #-------------------------------------------------------------------------------------------------------------
+    #                           se crea el Scrollbar para poder ver las provincias
+    #-------------------------------------------------------------------------------------------------------------
+
+    # listado de lasss provincias
+
+    marco_lista2 = tk.Frame(marco_formulario4)
+    marco_lista2.grid(row=1, column=0, columnspan=2, padx=5, pady=5, sticky='w')
+
+    scrollbar = tk.Scrollbar(marco_lista2)
+    scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+    lista2 = tk.Listbox(marco_lista2, yscrollcommand=scrollbar.set)
+    lista2.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+    for fechas in fechas_index:
+        lista2.insert(tk.END, fechas)
+
+    scrollbar.config(command=lista.yview)
+
+
+
+
+    #-------------------------------------------------------------------------------------------------------------
     #                           Primero un Label de Informacion de las provincias
     #-------------------------------------------------------------------------------------------------------------
 
@@ -151,6 +188,7 @@ def mostrar_ventana_principal(datos):
     provincias_con_precios = list(zip(provincias_argentinas, provincias_precios))
 
     #-------------------- Con la siguiente funcion podemos llamar las provincias y sus precios con dar clicl
+    # provincias : precios 
     destino = None
     def on_select(event): #como es un click se define como evento
         seleccion_index = lista.curselection() #lista.curselection() me permite saber si le dimos click

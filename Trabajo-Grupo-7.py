@@ -1,8 +1,15 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 from tkinter import ttk
+import calendar
+from datetime import datetime
+
 
 ##definicion de funciones de bordeado para imagenes
+
+
+#verificacion de conexion para poder tener actualizado el programa de compra
+
 
 # Definimos las listas
 
@@ -21,18 +28,43 @@ provincias_precios = [
     "11700", "11800", "11900", "12000",
     "12100"
 ]
+
+
+meses = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+]
+
+numeros = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+    11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    21, 22, 23, 24, 25, 26, 27, 28, 29, 30
+]
+
+
+
+
 #creamos los datos del usuario como objeto
 class Datos:
     def __init__(self):
         self.nombre = ""
         self.dni = ""
         self.email = ""
-        self.fecha = ""
         self.provincia = ""
         self.precio = ""
 
 
-#con la clase definida podemos ahora guardar los datos en una 
+  
 
 def mostrar_ventana_principal(datos):
 
@@ -42,34 +74,35 @@ def mostrar_ventana_principal(datos):
     ventana.title('Aeroline.ARG')
     ventana.geometry('1200x700')
     #implementacion de un color de fondo 3333333333333333333333333333333333333333333333333333333
-    ventana.configure(bg='Black')
+    #ventana.configure(bg='Black')
     
 
     #----------------cargar la imagen de fondo
 
-    """image_path = "file/image.png"  # ruta de la imagen
+    image_path = "file/image.png"  # ruta de la imagen
     image = Image.open(image_path) #abrimos la imagen con el modulo Image
     background_image = ImageTk.PhotoImage(image) #definimos background image con el modulo de tk ImageTK y usamos la clase PhotoImage(con la imagen)
 
-    #-----------------crear un widget Canvas ------------------ aca aclaro que saque de chatgpt la implementacion porq no sabia usar images como fondo
+    #-----------------crear un cuadraditos Canvas ------------------ aca aclaro que saque de chatgpt la implementacion porq no sabia usar images como fondo
 
     canvas = tk.Canvas(ventana, width=900, height=700)
     canvas.pack(fill="both", expand=True)
 
     #colocar la imagen de fondo en el Canvas
 
-    canvas.create_image(0, 0, image=background_image, anchor="nw")"""
+    canvas.create_image(0, 0, image=background_image, anchor="nw")
 
-
+    #--------------------- crear un optionmenu ---------------------##
 
     #-------------------------------------------------------------------------------------------------------------
     #                   aqui creamos los Frames para meter la estrutura del programa donde queremos con place
     #-------------------------------------------------------------------------------------------------------------
+    global style
     style = ttk.Style()
-    #style.configure("Transparent.TLabel", background="#fcfefb", foreground="black")
-    style.configure("Transparent.TLabel", background="green", foreground="black") #color de fondo 333333333333333333333333333333333333333333333333333
+    style.configure("Transparent.TLabel", background="#fcfefb", foreground="black")
+    #style.configure("Transparent.TLabel", background="green", foreground="black") #color de fondo 333333333333333333333333333333333333333333333333333
 
-    #----------------------------------------------------------------------------------marco para los widgets
+    #----------------------------------------------------------------------------------marco para los cuadraditoss
     marco_logotipo = ttk.Frame(ventana, style="Transparent.TLabel")
     marco_logotipo.place(relx=0.22, rely=0.22, anchor="center", width=500, height=300)
     #--------------------eje x ----- eje y --------------------ancho-------alto-----
@@ -79,12 +112,20 @@ def mostrar_ventana_principal(datos):
     #--------------------eje x ----- eje y --------------------ancho-------alto-----
 
     marco_formulario2 = ttk.Frame(ventana, style="Transparent.TLabel")
-    marco_formulario2.place(relx=0.47, rely=0.28, anchor="center", width=200, height=200)
+    marco_formulario2.place(relx=0.35, rely=0.28, anchor="center", width=200, height=200)
     #--------------------eje x ----- eje y --------------------ancho-------alto-----
 
     marco_formulario3 = ttk.Frame(ventana, style="Transparent.TLabel")
     marco_formulario3.place(relx=0.23, rely=0.7, anchor="center", width=450, height=350)
     #--------------------eje x ----- eje y --------------------ancho-------alto-----
+
+    marco_formulario4 = ttk.Frame(ventana, style="Transparent.TLabel")
+    marco_formulario4.place(relx=0.5, rely=0.2, anchor="center", width=150, height=150)
+    #--------------------eje x ----- eje y --------------------ancho-------alto---------
+
+    marco_formulario5 = ttk.Frame(ventana, style="Transparent.TLabel")
+    marco_formulario5.place(relx=0.53, rely=0.26, anchor="center", width=310, height=215)
+    #--------------------eje x ----- eje y --------------------ancho-------alto---------
 
 
     #-------------------------------------------------------------------------------------------------------------
@@ -92,7 +133,7 @@ def mostrar_ventana_principal(datos):
     #-------------------------------------------------------------------------------------------------------------
     # Cargar la imagen (logo)
 
-    """image_path = "file/logo.jpg"  # Reemplaza con la ruta correcta de tu logo
+    image_path = "file/logo.jpg"  # Reemplaza con la ruta correcta de tu logo
     imagen_logo = Image.open(image_path)
     imagen_logo = imagen_logo.resize((420, 80))  # Redimensiona la imagen si es necesario
     imagen_logo = ImageTk.PhotoImage(imagen_logo)
@@ -100,7 +141,7 @@ def mostrar_ventana_principal(datos):
     # Crear un Label para mostrar la imagen
 
     label_logo = tk.Label(marco_logotipo, image=imagen_logo)
-    label_logo.grid(row=0, column=0, padx=10, pady=10)  # Ajusta fila, columna, y relleno"""
+    label_logo.grid(row=0, column=0, padx=10, pady=10)  # Ajusta fila, columna, y relleno
 
     #-------------------------------------------------------------------------------------------------------------
     #                           EL Laber que contiene la segunda imagen
@@ -111,7 +152,7 @@ def mostrar_ventana_principal(datos):
     #agregar la imagen al Frame usando un Label.
     #colocar los Label encima de la imagen utilizando grid.
 
-    """ #cargar la Imagen de Fondo
+    #cargar la Imagen de Fondo
     image_path = "file/background_m2.jpg"  # Ruta de la imagen
     imagen_fondo = Image.open(image_path)
     imagen_fondo = imagen_fondo.resize((450, 350))
@@ -120,16 +161,12 @@ def mostrar_ventana_principal(datos):
     #Crear el Frame y el Label para la Imagen:
 
     label_fondo = tk.Label(marco_formulario3, image=imagen_fondo)
-    label_fondo.place(relx=0, rely=0, relwidth=1, relheight=1)"""
+    label_fondo.place(relx=0, rely=0, relwidth=1, relheight=1)
 
     #-------------------------------------------------------------------------------------------ingresamos labels
     #Los Label se colocan en la parte superior del Frame usando grid. 
     #Ajusta sticky para la alineacion //// padx, pady para el espaciado.
     #Configuramos la expansión de filas y columnas para asegurar que el Frame y los Label se ajusten correctamente.
-
-    """marco_formulario3.grid_rowconfigure(0, weight=1)
-    marco_formulario3.grid_rowconfigure(1, weight=1)
-    marco_formulario3.grid_columnconfigure(0, weight=1)"""
 
     #-------------------------------------------------------------------------------------------------------------
     #                                           Ingresamos los Label y Entry
@@ -161,10 +198,11 @@ def mostrar_ventana_principal(datos):
     entrada5 = ttk.Entry(marco_formulario)
     entrada5.grid(row=5, column=1, padx=5, pady=2, sticky='ew')
     
-
     ttk.Label(marco_formulario, text="Fecha:", style="Transparent.TLabel").grid(row=6, column=0, padx=15, pady=2, sticky='e')
-    entrada6 = ttk.Entry(marco_formulario)
-    entrada6.grid(row=6, column=1, padx=5, pady=2, sticky='ew')
+    info_label3 = tk.Label(marco_formulario, text="Seleccionar Fecha") #widget
+    info_label3.grid(row=6, column=1, padx=5, pady=2, sticky='ew')
+
+    
 
     #guardo los datos en el class
     
@@ -172,17 +210,6 @@ def mostrar_ventana_principal(datos):
         datos.nombre = entrada1.get() #la unica forma de entrar a los entry es con el .get
         datos.dni = entrada2.get()
         datos.email = entrada3.get()
-        datos.fecha = entrada6.get()
-
-
-
-
-
-
-
-
-
-    
 
 
     #-------------------------------------------------------------------------------------------------------------
@@ -191,8 +218,7 @@ def mostrar_ventana_principal(datos):
 
     # configurar la columna del `marco_formulario` para que el `entrada` no se expanda mas de lo necesario
 
-    """marco_formulario.columnconfigure(1, weight=1)
-    marco_formulario.columnconfigure(2, weight=0)"""
+    
 
     # listado de lasss provincias
 
@@ -209,13 +235,6 @@ def mostrar_ventana_principal(datos):
         lista.insert(tk.END, provincia)
 
     scrollbar.config(command=lista.yview)
-
-
-
-
-
-
-
 
 
 
@@ -260,7 +279,136 @@ def mostrar_ventana_principal(datos):
     datos.provincia = provincia
 
 
+    #-------------------------------------------------------------------------------------------------------------
+    #                 seleccionar una provincia optionmenu
+    #-------------------------------------------------------------------------------------------------------------
 
+    global dia
+    dia = ''
+
+    var = tk.StringVar(ventana)
+    var.set("Elegir")
+
+            
+    """def primer_cambio():
+        if dia == '' and var.get():
+            seleccionador_fechas(dia)
+        elif dia != '' and var.get() != 'Elegir':
+            seleccionador_fechas(dia)"""
+            
+    global mes
+    optionmenu = tk.OptionMenu(ventana, var, *meses, command=lambda mes=var.get(): seleccionador_fechas(dia))
+
+
+
+
+
+    optionmenu.config(width=15)
+    optionmenu.place(relx=0.11, rely=0.39)
+
+
+
+    #aqui definimos que mes selecciono el usuario y lo guardamos en la variable mes
+
+    # Vincular el cambio en el OptionMenu con la función option_menu
+    #-------------------------------------------------------------------------------------------------------------
+    #
+    #-------------------------------------------------------------------------------------------------------------
+
+
+
+
+    #definimos los dias para que funcione el calendario
+    def seleccionador_fechas(dia):
+        """Actualiza el label con el día y mes seleccionados."""
+        info_label3.config(text=f"{dia} - {var.get()} - {year_var.get()}")
+        global mes_comprado
+        mes_comprado = var.get()
+        print({var.get()})
+    
+    def mostrar_calendario():
+        # Frame para el calendario
+        global dia
+        global calendar_frame
+        calendar_frame = tk.Frame(marco_formulario5, background='white')
+        calendar_frame.pack(pady=20)
+
+        # Obtener el mes y el año actual
+        now = datetime.now()
+        global month_var
+        mes_actual = now.month
+        año_actual = now.year
+
+        global year_var
+        # Variables para el mes y el año seleccionados
+        month_var = tk.StringVar(value=meses[mes_actual-1])
+        year_var = tk.StringVar(value=str(año_actual))
+
+
+        # Botón para actualizar el calendario
+
+        optionmenu.bind('<<OptionMenuSelect>>', seleccionador_fechas)
+    
+        #if var.trace('write', lambda *args: seleccionador_fechas(dia))
+        #if var.get() != 'Elegir':
+        #    var.trace('w', lambda *args: seleccionador_fechas(dia))
+        #llamamos la funcion seleccionador_fechas cuando cambie el valor de la variable var
+        
+
+        #optionmenu.event_generate("<<OptionMenuSelect>>", seleccionar_dia)
+
+        #optionmenu.bind('<<OptionMenuSelect>>', seleccionador_fechas())#vincula la el clicl con la lista
+
+        ##chatgpt no sabia
+
+    
+        #funcion que actualiza los mese - llama a la funcion cargar
+
+        # Función para actualizar el calendario
+        def calendario(year_var,month_var,calendar_frame): #year_var = anio, month_var = mes
+        #---------------------------------------------------------------------- Limpiar la cuadrícula existente
+            for cuadraditos in calendar_frame.winfo_children(): #limpiamos el frame
+                cuadraditos.destroy() #limpiamos el frame
+            
+            #--------------------------------------------------------------------- Obtener el mes y el año seleccionados
+            año = int(year_var.get()) #obtenemos el anio
+            mes = meses.index(month_var.get()) + 1 #obtenemos el mes
+
+            # ---------------------------------------------------------------------Obtener los días de la semana y los días del mes
+            dias_semana = ["L", "M", "M", "J", "V", "S", "D"] #dias de la semana
+            calendario_mes = calendar.monthcalendar(año, mes) #dias del mes
+
+            # --------------------------------------------------------------------- Crear encabezados para los años de la semana
+            #
+            #--------------------------------------------------------------------------------------
+
+            #idea! crear una lista con las posiciones de comienzo de cada mes, luego de seleccionarlo que el for se acomode en el calendario
+            #posicionando cada label en la posicion correspondiente del mes
+
+
+
+            # Crear encabezados para los días de la semana
+            for i, dia in enumerate(dias_semana): #primero enumeramos la cantidad de elementos que posee dias_semana que son los 7 dias de la semana
+                label = tk.Label(calendar_frame, text=dia, background='white') #creamos un label haciendo dando el frame correspondiente, luego tenemos los dias y al final damos el color de fondo
+                label.grid(row=0, column=i)#colocamos el label en una posicion
+                label.config(width=2)#le damos el ancho
+
+            # Rellenar el calendario con los días como botones
+            for semana in range(len(calendario_mes)): #primero enumeramos la cantidad de elementos que posee calendario_mes que son las semanas
+                for dia in range(7): #ahora enumeramos la cantidad de elementos que posee cada semana
+                    dia_numero = calendario_mes[semana][dia] #luego enumeramos la cantidad de elementos que posee cada dia
+                    if dia_numero != 0: #si el dia no es 0
+                        button = tk.Button(calendar_frame, text=str(dia_numero),width=1, background='white',command=lambda dia=dia_numero: seleccionador_fechas(dia)) #creamos un boton con el dia y le damos el command para que al darle click se llame a la funcion seleccionar dia
+                        button.grid(row=semana+1, column=dia) #colocamos el boton
+                    else: #si el dia es 0
+                        label = tk.Label(calendar_frame, text="", background='white') #creamos un label
+                        label.grid(row=semana+1, column=dia)#colocamos el label
+        
+        calendario(year_var,month_var,calendar_frame)
+
+
+    
+    #label_info_fecha
 
     #-------------------------------------------------------------------------------------------------------------
     #                              guardar datos y mostrar mensaje de completado
@@ -274,7 +422,7 @@ def mostrar_ventana_principal(datos):
     def validar_entradas():
         entradas = [
             entrada1.get(), entrada2.get(), entrada3.get(), 
-            entrada4.get(), entrada5.get(), entrada6.get()
+            entrada4.get(), entrada5.get()#, entrada6.get()
         ]
         errores = [
             "Ingresar nombre",
@@ -326,8 +474,6 @@ def mostrar_ventana_principal(datos):
                 guardar_datos()
                 compra_realizada()
 
-
-
             
     #-------------------------------------------------------------------------------------------------------------
     #                           ventanas de compra realizada /// ventana de error///
@@ -342,10 +488,10 @@ def mostrar_ventana_principal(datos):
         etiqueta_bienvenida = tk.Label(venta_completada, text=f"¡Compra completada {datos.nombre}!")
         etiqueta_bienvenida.pack(pady=40)
 
-        etiqueta_bienvenida2 = tk.Label(venta_completada, text=f"La fecha del viaje: {datos.fecha}")
+        etiqueta_bienvenida2 = tk.Label(venta_completada, text=f"La fecha del viaje: {mes_comprado}")
         etiqueta_bienvenida2.pack(pady=20)
 
-        etiqueta_bienvenida3 = tk.Label(venta_completada, text=f"Destino:",info_label2)
+        etiqueta_bienvenida3 = tk.Label(venta_completada, text=f"Destino:")
         etiqueta_bienvenida3.pack(pady=20)
 
         boton_continuar = tk.Button(venta_completada, text="Continuar", command=venta_completada.destroy)
@@ -369,6 +515,7 @@ def mostrar_ventana_principal(datos):
     boton_comprar = tk.Button(marco_formulario3, text="Comprar", command=imprimir_informacion_compra)
     boton_comprar.pack(padx=5, pady=5, anchor='s')
 
+    mostrar_calendario()
     ventana.mainloop()
 
 
@@ -411,19 +558,19 @@ mostrar_ventana_principal(Datos)
 
 """
 Valores Comunes de sticky
-    sticky='n': Alinea el widget al borde norte (superior) de la celda.
-    sticky='e': Alinea el widget al borde este (derecho) de la celda.
-    sticky='s': Alinea el widget al borde sur (inferior) de la celda.
-    sticky='w': Alinea el widget al borde oeste (izquierdo) de la celda.
-    sticky='ne': Alinea el widget en la esquina noreste (superior derecha) de la celda.
-    sticky='sw': Alinea el widget en la esquina suroeste (inferior izquierda) de la celda.
-    sticky='ns': Expande el widget verticalmente para llenar toda la altura de la celda.
-    sticky='ew': Expande el widget horizontalmente para llenar toda la anchura de la celda.
-    sticky='nsew': Expande el widget para llenar toda la celda, tanto horizontal como verticalmente.
+    sticky='n': Alinea el cuadraditos al borde norte (superior) de la celda.
+    sticky='e': Alinea el cuadraditos al borde este (derecho) de la celda.
+    sticky='s': Alinea el cuadraditos al borde sur (inferior) de la celda.
+    sticky='w': Alinea el cuadraditos al borde oeste (izquierdo) de la celda.
+    sticky='ne': Alinea el cuadraditos en la esquina noreste (superior derecha) de la celda.
+    sticky='sw': Alinea el cuadraditos en la esquina suroeste (inferior izquierda) de la celda.
+    sticky='ns': Expande el cuadraditos verticalmente para llenar toda la altura de la celda.
+    sticky='ew': Expande el cuadraditos horizontalmente para llenar toda la anchura de la celda.
+    sticky='nsew': Expande el cuadraditos para llenar toda la celda, tanto horizontal como verticalmente.
 """
 
 """
-pack es uno de los métodos de gestión de geometría en Tkinter, utilizado para organizar widgets en la ventana.
+pack es uno de los métodos de gestión de geometría en Tkinter, utilizado para organizar cuadraditoss en la ventana.
 
 side=tk.LEFT coloca el Listbox en el lado izquierdo del contenedor donde se encuentra.
 fill=tk.BOTH hace que el Listbox se expanda para llenar todo el espacio disponible tanto en la dirección horizontal como en la vertical.
@@ -440,14 +587,14 @@ config(command=lista.yview) vincula la barra de desplazamiento al Listbox. yview
     
 
 """
-Estrategias para Mantener la Posición de los Widgets
+Estrategias para Mantener la Posición de los cuadraditoss
 
 Configura el sticky Adecuadamente:
-El parámetro sticky en grid controla cómo se expanden los widgets dentro de sus celdas. Puedes usar valores como 'n', 's', 'e', 'w' para anclar el widget a los bordes de la celda.
+El parámetro sticky en grid controla cómo se expanden los cuadraditoss dentro de sus celdas. Puedes usar valores como 'n', 's', 'e', 'w' para anclar el cuadraditos a los bordes de la celda.
 
 Configura Pesos de Filas y Columnas:
 Utiliza grid_rowconfigure y grid_columnconfigure para ajustar los pesos de las filas y columnas. Esto controla cómo se distribuye el espacio disponible cuando la ventana se redimensiona.
 
 Usa padx y pady:
-Ajusta los márgenes alrededor de los widgets para evitar que se muevan innecesariamente.
+Ajusta los márgenes alrededor de los cuadraditoss para evitar que se muevan innecesariamente.
 """
