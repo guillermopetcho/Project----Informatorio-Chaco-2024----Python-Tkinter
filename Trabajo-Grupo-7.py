@@ -51,8 +51,6 @@ numeros = [
 ]
 
 
-
-
 #creamos los datos del usuario como objeto
 class Datos:
     def __init__(self):
@@ -62,9 +60,6 @@ class Datos:
         self.provincia = ""
         self.precio = ""
 
-
-  
-
 def mostrar_ventana_principal(datos):
 
     """ creamos la  ventana principal """
@@ -72,22 +67,21 @@ def mostrar_ventana_principal(datos):
     ventana = tk.Tk()
     ventana.title('Aeroline.ARG')
     ventana.geometry('1200x700')
-    #implementacion de un color de fondo 3333333333333333333333333333333333333333333333333333333
-    #ventana.configure(bg='Black')
+    
     
 
     #----------------cargar la imagen de fondo
 
-    image_path = "file/image.png"  # ruta de la imagen
-    image = Image.open(image_path) #abrimos la imagen con el modulo Image
-    background_image = ImageTk.PhotoImage(image) #definimos background image con el modulo de tk ImageTK y usamos la clase PhotoImage(con la imagen)
+    image_path = "file/image.png"  # --------------------------------definimos la ruta de la imagen
+    image = Image.open(image_path) # --------------------------------abrimos la imagen con el modulo Image
+    background_image = ImageTk.PhotoImage(image) #-------------------definimos background image con el modulo de tk ImageTK y usamos la clase PhotoImage(con la imagen)
 
     #-----------------crear un cuadraditos Canvas ------------------ aca aclaro que saque de chatgpt la implementacion porq no sabia usar images como fondo
 
     canvas = tk.Canvas(ventana, width=900, height=700)
     canvas.pack(fill="both", expand=True)
 
-    #colocar la imagen de fondo en el Canvas
+    #--------------------------------------------------------------- colocar la imagen de fondo en el Canvas
 
     canvas.create_image(0, 0, image=background_image, anchor="nw")
 
@@ -97,9 +91,8 @@ def mostrar_ventana_principal(datos):
     #                   aqui creamos los Frames para meter la estrutura del programa donde queremos con place
     #-------------------------------------------------------------------------------------------------------------
     global style
-    style = ttk.Style()
-    style.configure("Transparent.TLabel", background="#fcfefb", foreground="black")
-    #style.configure("Transparent.TLabel", background="green", foreground="black") #color de fondo 333333333333333333333333333333333333333333333333333
+    style = ttk.Style() #definimos el estilo
+    style.configure("Transparent.TLabel", background="#fcfefb", foreground="black") #color de fondo
 
     #----------------------------------------------------------------------------------marco para los cuadraditoss
     marco_logotipo = ttk.Frame(ventana, style="Transparent.TLabel")
@@ -132,15 +125,15 @@ def mostrar_ventana_principal(datos):
     #-------------------------------------------------------------------------------------------------------------
     # Cargar la imagen (logo)
 
-    image_path = "file/logo.jpg"  # Reemplaza con la ruta correcta de tu logo
+    image_path = "file/logo.jpg"                                            # Reemplaza con la ruta correcta de tu logo
     imagen_logo = Image.open(image_path)
-    imagen_logo = imagen_logo.resize((420, 80))  # Redimensiona la imagen si es necesario
+    imagen_logo = imagen_logo.resize((420, 80))                             # Redimensiona la imagen si es necesario
     imagen_logo = ImageTk.PhotoImage(imagen_logo)
+    #------------------------------------------------------------------------ Crear un Label para mostrar la imagen
 
-    # Crear un Label para mostrar la imagen
 
     label_logo = tk.Label(marco_logotipo, image=imagen_logo)
-    label_logo.grid(row=0, column=0, padx=10, pady=10)  # Ajusta fila, columna, y relleno
+    label_logo.grid(row=0, column=0, padx=10, pady=10)                       # Ajusta fila, columna, y relleno
 
     #-------------------------------------------------------------------------------------------------------------
     #                           EL Laber que contiene la segunda imagen
@@ -151,7 +144,7 @@ def mostrar_ventana_principal(datos):
     #agregar la imagen al Frame usando un Label.
     #colocar los Label encima de la imagen utilizando grid.
 
-    #cargar la Imagen de Fondo
+    #-------------------------------------------------------------------------------------cargar la Imagen de Fondo
     image_path = "file/background_m2.jpg"  # Ruta de la imagen
     imagen_fondo = Image.open(image_path)
     imagen_fondo = imagen_fondo.resize((450, 350))
@@ -170,8 +163,8 @@ def mostrar_ventana_principal(datos):
     #-------------------------------------------------------------------------------------------------------------
     #                                           Ingresamos los Label y Entry
     #-------------------------------------------------------------------------------------------------------------
-    # Retornar la instancia creada
-    # seccion de logeo
+    # ---------------------------------------------------------------------------------Retornar la instancia creada
+    # ---------------------------------------------------------------------------------Para la seccion de logeo
     
     ttk.Label(marco_formulario, text="Nombre:", style="Transparent.TLabel").grid(row=1, column=0, padx=15, pady=2, sticky='e')
     entrada1 = ttk.Entry(marco_formulario)
@@ -205,9 +198,9 @@ def mostrar_ventana_principal(datos):
 
     #guardo los datos en el class
     
-    def guardar_datos():
-        datos.nombre = entrada1.get() #la unica forma de entrar a los entry es con el .get
-        datos.dni = entrada2.get()
+    def guardar_datos(): #----------------------------------------------------------funcion para guardar los datos
+        datos.nombre = entrada1.get() #--------------------------la unica forma de entrar a los entry es con el .get
+        datos.dni = entrada2.get() 
         datos.email = entrada3.get()
 
 
@@ -253,7 +246,7 @@ def mostrar_ventana_principal(datos):
     provincias_con_precios = list(zip(provincias_argentinas, provincias_precios))
 
     #-------------------- Con la siguiente funcion podemos llamar las provincias y sus precios con dar clicl
-    destino = ''
+    
     destinos = []
     def on_select(event): #como es un click se define como evento
         seleccion_index = lista.curselection() #lista.curselection() me permite saber si le dimos click
@@ -264,7 +257,7 @@ def mostrar_ventana_principal(datos):
             destino = (provincia, precio) #guardo la tupla
             destinos.append(destino) #agrego el destino
 
-    ##chatgpt no sabia
+    ##----------------------------------------chatgpt no sabia
     lista.bind('<<ListboxSelect>>', on_select)#vincula la el clicl con la lista
 
     ##definimos la seleccion de lista
@@ -283,17 +276,23 @@ def mostrar_ventana_principal(datos):
 
 
     #-------------------------------------------------------------------------------------------------------------
-    #                 seleccionar una provincia optionmenu
+    #                                                   optionmenu
     #-------------------------------------------------------------------------------------------------------------
 
+    global mes
     global dia
     dia = ''
     dia2 = ''
 
     var = tk.StringVar(ventana)
     var.set("Elegir")
-
+    
+    optionmenu = tk.OptionMenu(ventana, var, *meses, command=lambda mes=var.get(): primer_cambio())
+    optionmenu.config(width=15)
+    optionmenu.place(relx=0.11, rely=0.39)
             
+
+    #definimos el primer cambio para que cuando se cambie el mes se reinicie el label
     def primer_cambio():
         if dia == '' and var.get():
             seleccionador_fechas(dia,dia2)
@@ -305,27 +304,12 @@ def mostrar_ventana_principal(datos):
             seleccionador_fechas(dia,dia2)
         elif dia2 == '' and dia != '':
             seleccionador_fechas(dia,dia2)
-            
-    global mes
-    optionmenu = tk.OptionMenu(ventana, var, *meses, command=lambda mes=var.get(): primer_cambio())
-
-
-
-
-
-    optionmenu.config(width=15)
-    optionmenu.place(relx=0.11, rely=0.39)
-
 
 
     #aqui definimos que mes selecciono el usuario y lo guardamos en la variable mes
 
     # Vincular el cambio en el OptionMenu con la función option_menu
-    #-------------------------------------------------------------------------------------------------------------
-    #
-    #-------------------------------------------------------------------------------------------------------------
-
-
+    
 
 
     #definimos los dias para que funcione el calendario
@@ -358,6 +342,10 @@ def mostrar_ventana_principal(datos):
         mes_comprado = var.get()
         dia_comprado = dia
         print({var.get()})
+
+    #-------------------------------------------------------------------------------------------------------------
+    #                                                   calendario
+    #-------------------------------------------------------------------------------------------------------------
     
     def mostrar_calendario():
         # Frame para el calendario
@@ -419,7 +407,7 @@ def mostrar_ventana_principal(datos):
 
 
 
-            # Crear encabezados para los días de la semana
+            # Crear encabezados para los dias de la semana
             for i, dia in enumerate(dias_semana): #primero enumeramos la cantidad de elementos que posee dias_semana que son los 7 dias de la semana
                 label = tk.Label(calendar_frame, text=dia, background='white') #creamos un label haciendo dando el frame correspondiente, luego tenemos los dias y al final damos el color de fondo
                 label.grid(row=0, column=i)#colocamos el label en una posicion
@@ -436,7 +424,7 @@ def mostrar_ventana_principal(datos):
                         label = tk.Label(calendar_frame, text="", background='white') #creamos un label
                         label.grid(row=semana+1, column=dia)#colocamos el label
         
-        calendario(year_var,month_var,calendar_frame)
+        calendario(year_var,month_var,calendar_frame) #llamamos la funcion calendario
 
 
     
@@ -448,8 +436,6 @@ def mostrar_ventana_principal(datos):
 
     #aqui lo que hacemos es definir cual entry es el que esta vacio para imprimir un mensaje
     #no es eficiente pero ahorramos codigo
-
-
 
     def validar_entradas():
         entradas = [
@@ -467,13 +453,13 @@ def mostrar_ventana_principal(datos):
         
         #flagse = [entrada == "" for entrada in entradas]
 
-        flagse = []  # Creamos una lista vacía para almacenar los resultados
+        flagse = []  # Creamos una lista vacia para almacenar los resultados
 
-        for entrada in entradas:  
-            if entrada == "":  
-                flagse.append(True)  
+        for entrada in entradas: #recorremos la lista de entradas  
+            if entrada == "":  # Si la entrada es vacia
+                flagse.append(True) # Agregamos True a la lista  
             else:
-                flagse.append(False) 
+                flagse.append(False) # Agregamos False a la lista
 
 
         #mensajes_error = [errores[i] for i, flag in enumerate(flagse) if flag]
@@ -482,11 +468,16 @@ def mostrar_ventana_principal(datos):
 
         for i, flag in enumerate(flagse):  
             if flag:  
-                mensajes_error.append(errores[i])  
+                mensajes_error.append(errores[i])# Si la entrada es vacia, agrega el error correspondiente
 
         
         return mensajes_error #devuelve el resultado de la operacion
-    
+
+
+    #-------------------------------------------------------------------------------------------------------------
+    #                                 funcion para imprimir la compra realizada
+    #-------------------------------------------------------------------------------------------------------------
+
     def imprimir_informacion_compra():
         if not lista.curselection():
             venta_completada = tk.Toplevel()
@@ -528,6 +519,7 @@ def mostrar_ventana_principal(datos):
 
         boton_continuar = tk.Button(venta_completada, text="Continuar", command=venta_completada.destroy)
         boton_continuar.pack(pady=20)
+        guardar_datos()
 
     def compra_error(mensajes_error):
         venta_completada = tk.Toplevel()
@@ -541,8 +533,10 @@ def mostrar_ventana_principal(datos):
 
         boton_continuar = tk.Button(venta_completada, text="Continuar", command=compra_error.destroy)
         boton_continuar.pack(pady=20)
+        guardar_datos()
 
     # NO TOCAR LA POSICION DE LOS BOTONES PORQUE NO FUNCIONAN DESPUES
+    
 
     boton_comprar = tk.Button(marco_formulario3, text="Comprar", command=imprimir_informacion_compra)
     boton_comprar.pack(padx=5, pady=5, anchor='s')
