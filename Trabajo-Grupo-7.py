@@ -29,7 +29,6 @@ provincias_precios = [
     "12100"
 ]
 
-
 meses = [
     "Enero",
     "Febrero",
@@ -254,13 +253,16 @@ def mostrar_ventana_principal(datos):
     provincias_con_precios = list(zip(provincias_argentinas, provincias_precios))
 
     #-------------------- Con la siguiente funcion podemos llamar las provincias y sus precios con dar clicl
-    destino = None
+    destino = ''
+    destinos = []
     def on_select(event): #como es un click se define como evento
         seleccion_index = lista.curselection() #lista.curselection() me permite saber si le dimos click
         if seleccion_index:                     #ahora que le diste click nos da la infomacion de la seleccion
             seleccion = seleccion_index[0]      #donde le diste click lo guarda en seleccion, iniciando desde 0
             provincia, precio = provincias_con_precios[seleccion] #luego busca la provincia y su precio segun tu seleccion
             mostrar_informacion(provincia, precio)                 #nos deja la informacion en mostrar informacion
+            destino = (provincia, precio) #guardo la tupla
+            destinos.append(destino) #agrego el destino
 
     ##chatgpt no sabia
     lista.bind('<<ListboxSelect>>', on_select)#vincula la el clicl con la lista
@@ -271,6 +273,7 @@ def mostrar_ventana_principal(datos):
         global destino
         info_label.config(text=f"Precio del vuelos ${precios}")
         info_label2.config(text=f"{provincia}")
+        #etiqueta_bienvenida3.config(text=f"Destino: {provincia}")
 
     info_label2 = tk.Label(marco_formulario3, text="Aeropuertos", font=("Arial", 15),width=20, background="#89cfdb")
     info_label2.pack(padx=8, pady=110, anchor='w')
@@ -285,19 +288,26 @@ def mostrar_ventana_principal(datos):
 
     global dia
     dia = ''
+    dia2 = ''
 
     var = tk.StringVar(ventana)
     var.set("Elegir")
 
             
-    """def primer_cambio():
+    def primer_cambio():
         if dia == '' and var.get():
-            seleccionador_fechas(dia)
+            seleccionador_fechas(dia,dia2)
         elif dia != '' and var.get() != 'Elegir':
-            seleccionador_fechas(dia)"""
+            seleccionador_fechas(dia,dia2)
+        elif dia2 != '' and var.get() != 'Elegir':
+            seleccionador_fechas(dia,dia2)
+        elif dia2 == '' and var.get() != 'Elegir':
+            seleccionador_fechas(dia,dia2)
+        elif dia2 == '' and dia != '':
+            seleccionador_fechas(dia,dia2)
             
     global mes
-    optionmenu = tk.OptionMenu(ventana, var, *meses, command=lambda mes=var.get(): seleccionador_fechas(dia))
+    optionmenu = tk.OptionMenu(ventana, var, *meses, command=lambda mes=var.get(): primer_cambio())
 
 
 
@@ -319,16 +329,38 @@ def mostrar_ventana_principal(datos):
 
 
     #definimos los dias para que funcione el calendario
-    def seleccionador_fechas(dia):
+    
+    def seleccionador_fechas(dia,dia2):
         """Actualiza el label con el día y mes seleccionados."""
-        info_label3.config(text=f"{dia} - {var.get()} - {year_var.get()}")
+        if dia != '' and dia2 == '':
+            dia2 = dia
+            info_label3.config(text=f" {dia} - {var.get()} - {year_var.get()}")
+        elif dia == '' and dia2 == '':
+            info_label3.config(text=f" dia - {var.get()} - {year_var.get()}")
+        elif dia == '' and dia2 != '':
+            info_label3.config(text=f"{dia2} - {var.get()} - {year_var.get()}")
+        elif dia != '' and dia2 != '':
+            info_label3.config(text=f"{dia} - {var.get()} - {year_var.get()}")
+
+
+
+        """if dia == '' and dia2 != '':
+            info_label3.config(text=f"{dia2} - {var.get()} - {year_var.get()}")
+        elif dia2 == '':
+            dia2 = dia
+            info_label3.config(text=f"{dia} - {var.get()} - {year_var.get()}")
+        else:
+            info_label3.config(text=f"{dia2} - {var.get()} - {year_var.get()}")"""
+
+
+        global dia_comprado
         global mes_comprado
         mes_comprado = var.get()
+        dia_comprado = dia
         print({var.get()})
     
     def mostrar_calendario():
         # Frame para el calendario
-        global dia
         global calendar_frame
         calendar_frame = tk.Frame(marco_formulario5, background='white')
         calendar_frame.pack(pady=20)
@@ -398,7 +430,7 @@ def mostrar_ventana_principal(datos):
                 for dia in range(7): #ahora enumeramos la cantidad de elementos que posee cada semana
                     dia_numero = calendario_mes[semana][dia] #luego enumeramos la cantidad de elementos que posee cada dia
                     if dia_numero != 0: #si el dia no es 0
-                        button = tk.Button(calendar_frame, text=str(dia_numero),width=1, background='white',command=lambda dia=dia_numero: seleccionador_fechas(dia)) #creamos un boton con el dia y le damos el command para que al darle click se llame a la funcion seleccionar dia
+                        button = tk.Button(calendar_frame, text=str(dia_numero),width=1, background='white',command=lambda dia=dia_numero: seleccionador_fechas(dia,dia2))#creamos un boton con el dia y le damos el command para que al darle click se llame a la funcion seleccionar dia
                         button.grid(row=semana+1, column=dia) #colocamos el boton
                     else: #si el dia es 0
                         label = tk.Label(calendar_frame, text="", background='white') #creamos un label
@@ -488,11 +520,11 @@ def mostrar_ventana_principal(datos):
         etiqueta_bienvenida = tk.Label(venta_completada, text=f"¡Compra completada {datos.nombre}!")
         etiqueta_bienvenida.pack(pady=40)
 
-        etiqueta_bienvenida2 = tk.Label(venta_completada, text=f"La fecha del viaje: {mes_comprado}")
+        etiqueta_bienvenida2 = tk.Label(venta_completada, text=f"La fecha del viaje: {mes_comprado}, {dia_comprado}")
         etiqueta_bienvenida2.pack(pady=20)
 
-        etiqueta_bienvenida3 = tk.Label(venta_completada, text=f"Destino:")
-        etiqueta_bienvenida3.pack(pady=20)
+        """etiqueta_bienvenida3 = tk.Label(venta_completada, text=f"Destino: ")
+        etiqueta_bienvenida3.pack(pady=20)"""
 
         boton_continuar = tk.Button(venta_completada, text="Continuar", command=venta_completada.destroy)
         boton_continuar.pack(pady=20)
