@@ -6,8 +6,6 @@ from datetime import datetime
 
 
 ##definicion de funciones de bordeado para imagenes
-
-
 #verificacion de conexion para poder tener actualizado el programa de compra
 
 
@@ -55,6 +53,8 @@ class Datos:
         self.email = ""
         self.provincia = ""
         self.precio = ""
+    
+
 
 
 
@@ -72,7 +72,7 @@ def mostrar_ventana_principal(datos):
 
     #----------------cargar la imagen de fondo
 
-    image_path = "file\image.png"  # --------------------------------definimos la ruta de la imagen
+    image_path = "file/image.png"  # --------------------------------definimos la ruta de la imagen
     image = Image.open(image_path) # --------------------------------abrimos la imagen con el modulo Image
     background_image = ImageTk.PhotoImage(image) #-------------------definimos background image con el modulo de tk ImageTK y usamos la clase PhotoImage(con la imagen)
 
@@ -329,16 +329,6 @@ def mostrar_ventana_principal(datos):
             info_label3.config(text=f"{dia} - {var.get()} - {year_var.get()}")
 
 
-
-        """if dia == '' and dia2 != '':
-            info_label3.config(text=f"{dia2} - {var.get()} - {year_var.get()}")
-        elif dia2 == '':
-            dia2 = dia
-            info_label3.config(text=f"{dia} - {var.get()} - {year_var.get()}")
-        else:
-            info_label3.config(text=f"{dia2} - {var.get()} - {year_var.get()}")"""
-
-
         global dia_comprado
         global mes_comprado
         mes_comprado = var.get()
@@ -386,7 +376,7 @@ def mostrar_ventana_principal(datos):
     
         #funcion que actualiza los mese - llama a la funcion cargar
 
-        # Función para actualizar el calendario
+        # Funcion para actualizar el calendario
         def calendario(year_var,month_var,calendar_frame): #year_var = anio, month_var = mes
         #---------------------------------------------------------------------- Limpiar la cuadrícula existente
             for cuadraditos in calendar_frame.winfo_children(): #limpiamos el frame
@@ -495,54 +485,65 @@ def mostrar_ventana_principal(datos):
                 compra_error(mensajes_error)
             else:
                 guardar_datos()
-                compra_realizada()
-
-            
-    #-------------------------------------------------------------------------------------------------------------
-    #                           ventanas de compra realizada /// ventana de error///
-    #-------------------------------------------------------------------------------------------------------------
-
-    def compra_realizada():
-        venta_completada = tk.Toplevel()
-        venta_completada.title('Informacion del Ticket')
-        venta_completada.geometry('400x250')
-
-        # Utiliza el atributo 'nombre' de la instancia 'usuario_creado'
-        etiqueta_bienvenida = tk.Label(venta_completada, text=f"¡Compra completada {datos.nombre}!")
-        etiqueta_bienvenida.pack(pady=40)
-
-        etiqueta_bienvenida2 = tk.Label(venta_completada, text=f"La fecha del viaje: {mes_comprado}, {dia_comprado}")
-        etiqueta_bienvenida2.pack(pady=20)
-
-        """etiqueta_bienvenida3 = tk.Label(venta_completada, text=f"Destino: ")
-        etiqueta_bienvenida3.pack(pady=20)"""
-
-        boton_continuar = tk.Button(venta_completada, text="Continuar", command=venta_completada.destroy)
-        boton_continuar.pack(pady=20)
-        guardar_datos()
-
-    def compra_error(mensajes_error):
-        venta_completada = tk.Toplevel()
-        venta_completada.title('¡Error al completar los datos!')
-        venta_completada.geometry('400x250')
-
-        for mensaje in mensajes_error:
-            etiqueta_bienvenida = tk.Label(venta_completada, text=mensaje)
-            etiqueta_bienvenida.pack(pady=30, anchor="center")
-
-
-        boton_continuar = tk.Button(venta_completada, text="Continuar", command=compra_error.destroy)
-        boton_continuar.pack(pady=20)
-        guardar_datos()
-
-    # NO TOCAR LA POSICION DE LOS BOTONES PORQUE NO FUNCIONAN DESPUES
-    
-
+                compra_realizada(datos,mes_comprado,dia_comprado)
     boton_comprar = tk.Button(marco_formulario3, text="Comprar", command=imprimir_informacion_compra)
     boton_comprar.pack(padx=5, pady=5, anchor='s')
 
     mostrar_calendario()
     ventana.mainloop()
+
+            
+
+
+
+
+
+
+
+
+    #-------------------------------------------------------------------------------------------------------------
+    #                           ventanas de compra realizada /// ventana de error///
+    #-------------------------------------------------------------------------------------------------------------
+
+
+def compra_realizada(datos,mes_comprado,dia_comprado):
+    venta_completada = tk.Toplevel()
+    venta_completada.title('Informacion del Ticket')
+    venta_completada.geometry('400x250')
+
+    # Utiliza el atributo 'nombre' de la instancia 'usuario_creado'
+    etiqueta_bienvenida = tk.Label(venta_completada, text=f"¡Compra completada {datos.nombre}!")
+    etiqueta_bienvenida.pack(pady=40)
+
+    etiqueta_bienvenida2 = tk.Label(venta_completada, text=f"La fecha del viaje: {mes_comprado}, {dia_comprado}")
+    etiqueta_bienvenida2.pack(pady=20)
+
+    """etiqueta_bienvenida3 = tk.Label(venta_completada, text=f"Destino: ")
+    etiqueta_bienvenida3.pack(pady=20)"""
+
+    boton_continuar = tk.Button(venta_completada, text="Continuar", command=venta_completada.destroy)
+    boton_continuar.pack(pady=20)
+
+
+def compra_error(mensajes_error):
+    venta_completada = tk.Toplevel()
+    venta_completada.title('¡Error al completar los datos!')
+    venta_completada.geometry('400x250')
+
+    for mensaje in mensajes_error:
+        etiqueta_bienvenida = tk.Label(venta_completada, text=mensaje)
+        etiqueta_bienvenida.pack(pady=30, anchor="center")
+
+    boton_continuar = tk.Button(venta_completada, text="Continuar", command=compra_error.destroy)
+    boton_continuar.pack(pady=20)
+
+
+
+
+
+
+
+
 
 
 #CARGA Y LLAMADA
@@ -552,74 +553,3 @@ mostrar_ventana_principal(Datos)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-""" ESTRUCTURA """
-
-#LISTAS
-#CLASE USUARIO PARA MANEJAR LOS DATOS COMO OBJETOS DONDE YA CADA DATO ES UN ATRIBUTO
-#CREAMOS LE VENTANA PRINCIPAL Y CARGAMOS LA CLASE USUARIO (datos)
-
-
-
-
-
-
-
-
-
-
-"""
-Valores Comunes de sticky
-    sticky='n': Alinea el cuadraditos al borde norte (superior) de la celda.
-    sticky='e': Alinea el cuadraditos al borde este (derecho) de la celda.
-    sticky='s': Alinea el cuadraditos al borde sur (inferior) de la celda.
-    sticky='w': Alinea el cuadraditos al borde oeste (izquierdo) de la celda.
-    sticky='ne': Alinea el cuadraditos en la esquina noreste (superior derecha) de la celda.
-    sticky='sw': Alinea el cuadraditos en la esquina suroeste (inferior izquierda) de la celda.
-    sticky='ns': Expande el cuadraditos verticalmente para llenar toda la altura de la celda.
-    sticky='ew': Expande el cuadraditos horizontalmente para llenar toda la anchura de la celda.
-    sticky='nsew': Expande el cuadraditos para llenar toda la celda, tanto horizontal como verticalmente.
-"""
-
-"""
-pack es uno de los métodos de gestión de geometría en Tkinter, utilizado para organizar cuadraditoss en la ventana.
-
-side=tk.LEFT coloca el Listbox en el lado izquierdo del contenedor donde se encuentra.
-fill=tk.BOTH hace que el Listbox se expanda para llenar todo el espacio disponible tanto en la dirección horizontal como en la vertical.
-expand=True permite que el Listbox se expanda para ocupar cualquier espacio adicional en la ventana si esta se redimensiona.
-"""
-
-"""
-scrollbar.config(command=lista.yview):
-
-scrollbar es la barra de desplazamiento que acompaña al Listbox.
-config(command=lista.yview) vincula la barra de desplazamiento al Listbox. yview es el método que gestiona la vista vertical del Listbox, permitiendo que la barra de desplazamiento controle la visualización del contenido del Listbox.
-
-"""
-    
-
-"""
-Estrategias para Mantener la Posición de los cuadraditoss
-
-Configura el sticky Adecuadamente:
-El parámetro sticky en grid controla cómo se expanden los cuadraditoss dentro de sus celdas. Puedes usar valores como 'n', 's', 'e', 'w' para anclar el cuadraditos a los bordes de la celda.
-
-Configura Pesos de Filas y Columnas:
-Utiliza grid_rowconfigure y grid_columnconfigure para ajustar los pesos de las filas y columnas. Esto controla cómo se distribuye el espacio disponible cuando la ventana se redimensiona.
-
-Usa padx y pady:
-Ajusta los márgenes alrededor de los cuadraditoss para evitar que se muevan innecesariamente.
-"""

@@ -6,8 +6,6 @@ from datetime import datetime
 
 
 ##definicion de funciones de bordeado para imagenes
-
-
 #verificacion de conexion para poder tener actualizado el programa de compra
 
 
@@ -55,6 +53,14 @@ class Datos:
         self.email = ""
         self.provincia = ""
         self.precio = ""
+    
+
+
+
+#creamos una clase para la ventana
+class Ventana:
+    def __init__(self):
+        pass
 
 
 
@@ -72,7 +78,7 @@ def mostrar_ventana_principal(datos):
 
     #----------------cargar la imagen de fondo
 
-    image_path = "file\image.png"  # --------------------------------definimos la ruta de la imagen
+    image_path = "file/image.png"  # --------------------------------definimos la ruta de la imagen
     image = Image.open(image_path) # --------------------------------abrimos la imagen con el modulo Image
     background_image = ImageTk.PhotoImage(image) #-------------------definimos background image con el modulo de tk ImageTK y usamos la clase PhotoImage(con la imagen)
 
@@ -327,16 +333,6 @@ def mostrar_ventana_principal(datos):
             info_label3.config(text=f"{dia2} - {var.get()} - {year_var.get()}")
         elif dia != '' and dia2 != '':
             info_label3.config(text=f"{dia} - {var.get()} - {year_var.get()}")
-
-
-
-        """if dia == '' and dia2 != '':
-            info_label3.config(text=f"{dia2} - {var.get()} - {year_var.get()}")
-        elif dia2 == '':
-            dia2 = dia
-            info_label3.config(text=f"{dia} - {var.get()} - {year_var.get()}")
-        else:
-            info_label3.config(text=f"{dia2} - {var.get()} - {year_var.get()}")"""
 
 
         global dia_comprado
