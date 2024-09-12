@@ -5,11 +5,6 @@ import calendar
 from datetime import datetime
 
 
-##definicion de funciones de bordeado para imagenes
-#verificacion de conexion para poder tener actualizado el programa de compra
-
-
-# Definimos las listas
 
 provincias_argentinas = [
     "Buenos Aires", "Catamarca", "Chaco", "Chubut", "Córdoba", "Corrientes",
@@ -44,8 +39,6 @@ meses = [
 
 
 
-
-#creamos los datos del usuario como objeto
 class Datos:
     def __init__(self):
         self.nombre = ""
@@ -70,19 +63,13 @@ def mostrar_ventana_principal(datos):
     
     
 
-    #----------------cargar la imagen de fondo
+    
 
-    image_path = "file/image.png"  # --------------------------------definimos la ruta de la imagen
-    image = Image.open(image_path) # --------------------------------abrimos la imagen con el modulo Image
-    background_image = ImageTk.PhotoImage(image) #-------------------definimos background image con el modulo de tk ImageTK y usamos la clase PhotoImage(con la imagen)
-
-    #-----------------crear un cuadraditos Canvas ------------------ aca aclaro que saque de chatgpt la implementacion porq no sabia usar images como fondo
-
+    image_path = "file/image.png"  
+    image = Image.open(image_path) 
+    background_image = ImageTk.PhotoImage(image) 
     canvas = tk.Canvas(ventana, width=900, height=700)
     canvas.pack(fill="both", expand=True)
-
-    #--------------------------------------------------------------- colocar la imagen de fondo en el Canvas
-
     canvas.create_image(0, 0, image=background_image, anchor="nw")
 
     
@@ -137,16 +124,13 @@ def mostrar_ventana_principal(datos):
     label_logo = tk.Label(marco_logotipo, image=imagen_logo)
     label_logo.grid(row=0, column=0, padx=10, pady=10)                       # Ajusta fila, columna, y relleno
 
-    #-------------------------------------------------------------------------------------------------------------
-    #                           EL Laber que contiene la segunda imagen (imagen de azul)
-    #-------------------------------------------------------------------------------------------------------------
-    
-    #Para agregar una imagen de fondo a un ttk.Frame y colocar dos Label en la parte superior de ese Frame utilizando grid 
-    #crear un Frame para la imagen de fondo.
-    #agregar la imagen al Frame usando un Label.
-    #colocar los Label encima de la imagen utilizando grid.
 
-    #-------------------------------------------------------------------------------------cargar la Imagen de Fondo
+
+
+    #-------------------------------------------------------------------------------------------------------------
+    #                           EL Laber que contiene la segunda imagen (fondo)
+    #-------------------------------------------------------------------------------------------------------------
+    # Cargar la imagen (fondo)
     image_path = "file/background_m2.jpg"  # Ruta de la imagen
     imagen_fondo = Image.open(image_path)
     imagen_fondo = imagen_fondo.resize((450, 350))
@@ -275,6 +259,15 @@ def mostrar_ventana_principal(datos):
 
 
     datos.provincia = provincia
+
+
+
+
+
+
+
+
+
 
 
     #-------------------------------------------------------------------------------------------------------------
@@ -486,6 +479,7 @@ def mostrar_ventana_principal(datos):
             else:
                 guardar_datos()
                 compra_realizada(datos,mes_comprado,dia_comprado)
+                
     boton_comprar = tk.Button(marco_formulario3, text="Comprar", command=imprimir_informacion_compra)
     boton_comprar.pack(padx=5, pady=5, anchor='s')
 
@@ -501,9 +495,13 @@ def mostrar_ventana_principal(datos):
 
 
 
-    #-------------------------------------------------------------------------------------------------------------
-    #                           ventanas de compra realizada /// ventana de error///
-    #-------------------------------------------------------------------------------------------------------------
+
+
+
+
+#-------------------------------------------------------------------------------------------------------------
+#                           ventanas de compra realizada /// ventana de error///
+#-------------------------------------------------------------------------------------------------------------
 
 
 def compra_realizada(datos,mes_comprado,dia_comprado):
@@ -545,11 +543,11 @@ def compra_error(mensajes_error):
 
 
 
+def main(Datos):
+    #CARGA Y LLAMADA
+    #mis_datos = Datos()
+    mostrar_ventana_principal(Datos)
 
-#CARGA Y LLAMADA
-mis_datos = Datos()
-mostrar_ventana_principal(Datos)
 
-
-
+main(Datos)
 
