@@ -32,11 +32,13 @@ datos = None  # Variable global para almacenar la clase Datos
 # Clase Datos global
 class Datos:
     def __init__(self): # constructor
-        self.nombre = ""
-        self.dni = ""
+        self.nombre = "" #atributo publico
+        self._dni = "" #atributo protegido
         self.email = ""
         self.provincia = ""
         self.precio = ""
+        self.__code = ""#atributo privado
+        self.__cvv = ""
         self.dia_comprado = ""
         self.mes_comprado = ""
         self.id_comprado = ""
@@ -50,8 +52,10 @@ def inicializar_datos(): # constructor de la clase que inicializa los datos de f
 def guardar_datos():
     global datos
     datos.nombre = entrada1.get()
-    datos.dni = entrada2.get()
+    datos._dni = entrada2.get()
     datos.email = entrada3.get()
+    datos.__code = entrada4.get()
+    datos.__cvv = entrada5.get()
 
 # mostrar la ventana principal
 def mostrar_ventana_principal():
@@ -200,7 +204,7 @@ def Ingresado_informacion():
     entrada1.grid(row=1, column=1, padx=5, pady=2, sticky='ew')
     
     
-    ttk.Label(marco_formulario, text="DNI:", style="Transparent.TLabel").grid(row=2, column=0, padx=15, pady=2, sticky='e')
+    ttk.Label(marco_formulario, text="_DNI:", style="Transparent.TLabel").grid(row=2, column=0, padx=15, pady=2, sticky='e')
     entrada2 = ttk.Entry(marco_formulario)
     entrada2.grid(row=2, column=1, padx=5, pady=2, sticky='ew')
     
@@ -389,7 +393,7 @@ def validar_entradas():
 
     errores = [
         "Ingresar nombre",
-        "Ingresar DNI",
+        "Ingresar _DNI",
         "Ingresar Email",
         "Ingresar N/T",
         "Ingresar CVV",
@@ -489,11 +493,11 @@ def imprimir_informacion_compra():
 
 
 
-def __init__():
+if __name__ == "__main__":
     inicializar_datos()
     mostrar_ventana_principal()
 
-__init__()
+
 
 
 
