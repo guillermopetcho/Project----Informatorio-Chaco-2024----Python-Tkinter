@@ -12,9 +12,13 @@ Muestra las provincia y precio de pasajes.
 ### version 2
 
 Se controla el ingreso de datos.
+
 Se controla la seleccion de un elemento de la barra.
+
 Imprime los datos de la compra: Nombre y Fecha del pasaje.
+
 Imprime el/los datos faltantes en el ingreso de datos.
+
 Imprime un error al no seleccionar.
 
 
@@ -25,7 +29,9 @@ Imprime un error al no seleccionar.
 ### version 3
 
 Se agrego un frame simulando un calendario: al dar clic se muestra la fecha en un label
+
 Se agrego un OptionMenu que tiene una lista de meses: al dar clic se actualiza en un label
+
 Se volvio mas eficiente el codigo de muestreo de provincias, precios con ayuda de chatgpt
 
 
