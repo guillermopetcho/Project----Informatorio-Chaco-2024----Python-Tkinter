@@ -1,5 +1,6 @@
-# grupo 7
-proyecto integrador Informatorio Virtual - Barra de desplazamiento
+## proyecto integrador Informatorio Virtual - Barra de desplazamiento
+
+
 --version 1
 
 Muestra las provincia y precio de pasajes.
@@ -7,7 +8,7 @@ Muestra las provincia y precio de pasajes.
 
 --version 2
 
-Se controla el ingreso de datos.\n
+Se controla el ingreso de datos.
 
 Se controla la seleccion de un elemento de la barra.
 
@@ -23,9 +24,12 @@ Imprime un error al no seleccionar.
 --version 3
 
 Se agrego un frame simulando un calendario
-*al dar clic se muestra la fecha en un label
+
+al dar clic se muestra la fecha en un label
+
 Se agrego un OptionMenu que tiene una lista de meses
-*al dar clic se actualiza en un label
+
+al dar clic se actualiza en un label
 
 Se volvio mas eficiente el codigo de muestreo de provincias, precios con ayuda de chatgpt
 
